@@ -1,0 +1,28 @@
+import codecs
+file = codecs.open("songs.csv", "r", "utf_8_sig")
+text = file.readlines()[1:]
+file.close()
+m = []
+for e in text:
+    """Преобразует файл в удобный для работы спиок"""
+    e = e.strip().split(';')
+    m.append(e)
+
+name = ''
+while True:
+    name = input()
+    if name == '0':
+        """Завершает работу программы при вводе 0"""
+        break
+    song = ''
+    flag = False
+    for w in m:
+        """ищет песню по исполнителю"""
+        if w[1] == name:
+            song = w[2]
+            flag = True
+            break
+    if flag == True:
+        print(f"У {name} найдена песня: {song}")
+    else:
+        print("К сожалению, ничего не удалось найти")

@@ -1,0 +1,42 @@
+import codecs
+file = codecs.open("songs.csv", "r", "utf_8_sig")
+text = file.readlines()[1:]
+file.close()
+m = []
+
+for e in text:
+    """Преобразует файл в удобный для работы спиок"""
+    e = e.strip().split(';')
+    m.append(e)
+
+russian_artists = []
+foreign_artists = []
+alf = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
+
+for w in m:
+    name = w[1]
+    flag = False
+    for b in alf:
+        """Проверяет есть ли в имени русская буква"""
+        if b in name:
+            flag = True
+    if flag == True:
+        """добавляет имя в нужный список, если его там ещё нет"""
+        if not name in russian_artists:
+            russian_artists.append(name)
+    else:
+        if not name in foreign_artists:
+            foreign_artists.append(name)
+
+print(f'Количество российских исполнителей: {len(russian_artists)}')
+print(f'Количество иностранных исполнителей: {len(foreign_artists)}')
+
+"""Запись имён в файлы"""
+rus = open("russian_artists.txt", "w")
+notrus = open("foreign_artists.txt", "w")
+for n in russian_artists:
+    rus.write(f'{n}\n')
+for n in foreign_artists:
+    notrus.write(f'{n}\n')
+rus.close()
+notrus.close()
